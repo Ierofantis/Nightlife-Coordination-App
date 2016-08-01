@@ -1,30 +1,32 @@
-var merge = require('merge');
-var yelp = require('node-yelp-api');
 var express = require('express');
-var app = express();
+require('dotenv').load();
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var mongodb = require('mongodb');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var routes = require('./routes');
 
-app.get('/', function(req, res){ 
+mongoose.connect('mongodb://localhost/myapp', function (error){
+   
+   if (error) console.error(error);
+   else console.log("mongo connected")
 
-  var options ={ 
-  consumer_key: '07BSeMz5vajMDoPc1i02ng',
-  consumer_secret: '4rBHePhlcRH-SEkbmHRKLlLLbg0',
-  token: '8i9BMfEh8XttSzoUw-fb8T4C_tk6BVWH',
-  token_secret: 'DYEUv11n8qjEVy0hysCeyUCjq58',
-};
- 
-var parameters = {
-  term: 'food',
-  location: 'Montreal',
-  limit:"10"
-};
-
-yelp.search(merge(options, parameters), (err,data) => {
-  res.json(data);
-  
- });
 });
+var app = express();
+app.set("port", process.env.PORT || 3000);
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.use(passport.initialize());
+app.use(cookieParser());
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: false }));
 
-var port = process.env.PORT || 8080;
-app.listen(port,  function () {
-	console.log('Listening on port ' + port + '...');
+app.use(routes);
+
+app.listen(app.get("port"), function() {
+  console.log("Server started on port " + app.get("port"));
 });

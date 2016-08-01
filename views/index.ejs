@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+   <link href="/css/index.css" rel="stylesheet" type="text/css">
+
+</head>
+
+ <% include partials/nav.ejs %>
+
+    <div class="container">
+    <div class="row">
+
+    <h1>Search For Nighlife</h1>
+
+<form action="/" method="post">
+  
+  <input name="location" type="text" class="form-control" placeholder="location" required>
+  </label>  
+  </label>  
+  <input type="submit" value="Submit" class="btn btn-primary btn-block">
+
+</form>
+ 
+    <div id="results">
+      
+   <% 
+  var businesses = data.businesses;
+  var location = data.region;
+
+
+   businesses.forEach(function(user) { %>
+<div class="wrap">
+  <div class="s1_3">
+    <div class="in">
+     
+      <h2><%= user.name %></h2>
+    </div>
+  </div>
+</div>
+  <% }) %>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    </container>
+    </row>
+    
+<% include partials/footer.ejs %>
+
+</body>
+
+</html>
