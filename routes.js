@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) { 
- 
+ var r = {re:req.body.location};
 var client = yelp.createClient({
   oauth: {
     "consumer_key": "07BSeMz5vajMDoPc1i02ng",
@@ -27,13 +27,11 @@ var client = yelp.createClient({
   httpClient: {
     maxSockets: 10 // ~> Default is 10 
   }
-});
- 
- var loc = req.body.location;
+}); 
 
 client.search({
   terms: "Nightlife",
-  location: req.params.location
+  location: req.body.location
 }).then(function (data) {
   var businesses = data.businesses;
   var location = data.region;
