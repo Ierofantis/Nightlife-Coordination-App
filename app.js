@@ -1,4 +1,5 @@
 var express = require('express');
+var app = express();
 require('dotenv').load();
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -10,6 +11,10 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var routes = require('./routes');
 var session = require("express-session");
+var passport = require('passport');
+var flash    = require('connect-flash');
+var morgan = require('morgan');
+
 
 mongoose.connect('mongodb://localhost/myapp', function (error){
    
@@ -17,16 +22,24 @@ mongoose.connect('mongodb://localhost/myapp', function (error){
    else console.log("mongo connected")
 
 });
-var app = express();
+
+require('./config/passport')(passport); // pass passport for configuration
+// set up our express application
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser());
 app.set("port", process.env.PORT || 3000);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(session({ secret: 'hi' })); // session secret
 app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash());
 app.use(cookieParser());
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(routes);
+// routes 
+require('./routes.js')(app, passport);
 
 
 
