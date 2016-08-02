@@ -1,10 +1,12 @@
 var express = require('express');
-var jwt = require('express-jwt');
+//var jwt = require('express-jwt');
 var router = express.Router();
-var auth = jwt({secret: 'SECRET', userProperty: 'payload'})
+//var auth = jwt({secret: 'SECRET', userProperty: 'payload'})
 var mongoose = require('mongoose');
 var yelp = require("node-yelp");
-var passport = require('passport');
+//var passport = require('passport');
+var Reg = require("./models/register");
+
 //var Bar = require("./models/Bars");
 //var User = mongoose.model('User');
 //var Location = require("./models/Location");
@@ -12,6 +14,11 @@ var passport = require('passport');
 router.get('/', function(req, res, next) {
     res.render('index1', { title: 'Express' });
 });
+
+router.get('/signup', function(req, res, next) {
+    res.render('signup');
+});
+
 
 router.post('/', function(req, res, next) { 
  var r = {re:req.body.location};

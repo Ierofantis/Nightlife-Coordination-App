@@ -9,6 +9,7 @@ var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var routes = require('./routes');
+var session = require("express-session");
 
 mongoose.connect('mongodb://localhost/myapp', function (error){
    
@@ -26,6 +27,10 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(routes);
+
+
+
+
 
 app.listen(app.get("port"), function() {
   console.log("Server started on port " + app.get("port"));
