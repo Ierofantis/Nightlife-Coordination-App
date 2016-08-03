@@ -29,15 +29,15 @@ module.exports = function(app, passport) {
  
    httpClient: {
      maxSockets: 10 
-   }
- }); 
+    }
+  }); 
 
-client.search({
-   terms: "Nightlife",
-   location: req.body.location
- }).then(function (data) {
-   var businesses = data.businesses;
-   var location = data.region;
+    client.search({
+       terms: "Nightlife",
+       location: req.body.location
+     }).then(function (data) {
+       var businesses = data.businesses;
+       var location = data.region;
 
 
  res.render("index2", { data:data});
@@ -58,7 +58,7 @@ client.search({
     app.post("/submit",isLoggedIn, function(req, res, next) {
         
         var name = req.body.name;
-        var skase = req.user;
+        var skase = req.user.google.name;
 
         var n= new Name({name:name, skase:skase }); 
      
@@ -66,24 +66,23 @@ client.search({
 
          console.log(names);
 
-         res.redirect('/profile/'+skase+'/names'); 
+         res.redirect('/profile/names'); 
 
-
-      });
-        
+      });        
     });
 
  
 
 
-   app.get("/profile/:skase/names", function(req, res) {
+   app.get("/profile/names", function(req, res) {
 
          var name = req.params.name;
          var names = req.params.names;
          var skase = req.params.skase;              
          
        console.log(names);
-       Name.find({ skase:skase, names:names
+
+       Name.find({ skase:req.user.google.name, names:names
       }, function(err, data) {
          if (err) { return next(err); }
           
@@ -91,10 +90,17 @@ client.search({
           });
         });
 
+       app.get("/titles", function(req, res) {
+
+          
+           res.render("titles", { data: data});
+          });
+        
 
 
     // route for logging out
     app.get('/logout', function(req, res) {
+
         req.logout();
         res.redirect('/');
     });
@@ -106,19 +112,19 @@ client.search({
             passport.authenticate('google', {
                     successRedirect : '/profile',
                     failureRedirect : '/fail'
-            }));
 
-};   
+            }));
+     };   
   
 // route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
+    function isLoggedIn(req, res, next) {
 
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated())
-        return next();
+        // if user is authenticated in the session, carry on
+        if (req.isAuthenticated())
+            return next();
 
-    // if they aren't redirect them to the home page
-    res.redirect('/');
-}
+        // if they aren't redirect them to the home page
+        res.redirect('/');
+     }
  
 
