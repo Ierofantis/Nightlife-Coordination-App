@@ -49,6 +49,7 @@ client.search({
     });
     
     app.get('/profile', isLoggedIn, function(req, res) {
+        console.log(req.user);
         res.render('profile.ejs', {
             user : req.user 
         });
@@ -56,33 +57,38 @@ client.search({
 
     app.post("/submit",isLoggedIn, function(req, res, next) {
         
-        var name = req.body.name;              
-        var n = new Name({name:name}); 
+        var name = req.body.name;
+        var skase = req.user;
+
+        var n= new Name({name:name, skase:skase }); 
      
         n.save(function(err,names) {
 
          console.log(names);
 
-         res.redirect('/profile/${name}/names');
-         //res.send(names);
+         res.redirect('/profile/'+skase+'/names'); 
 
 
       });
         
     });
 
-    app.get("/profile/:name/names", function(req, res) {
+ 
+
+
+   app.get("/profile/:skase/names", function(req, res) {
 
          var name = req.params.name;
-         var names = req.params.names;              
+         var names = req.params.names;
+         var skase = req.params.skase;              
          
-         console.log(names);
-        Name.find({ names:names
-        }, function(err, data) {
-           if (err) { return next(err); }
+       console.log(names);
+       Name.find({ skase:skase, names:names
+      }, function(err, data) {
+         if (err) { return next(err); }
           
            res.render("titles", { data: data});
-         });
+          });
         });
 
 
