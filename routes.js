@@ -1,26 +1,11 @@
-var express = require('express');
-//var jwt = require('express-jwt');
-//var app = express.app();
-//var auth = jwt({secret: 'SECRET', userProperty: 'payload'})
-var mongoose = require('mongoose');
-var Name = require("./models/name");
-var yelp = require("node-yelp");
-//var passport = require('passport');
-var Reg = require("./models/register");
-
-//var Bar = require("./models/Bars");
-//var User = mongoose.model('User');
-//var Location = require("./models/Location");
 module.exports = function(app, passport) {
-    var express = require('express');
 
-    var mongoose = require('mongoose');
-    var yelp = require("node-yelp");
-    //var passport = require('passport');
-    var Reg = require("./models/register");
-   //  app.get('/', function(req, res, next) {
-   //  res.render('index3', { title: 'Express' });
-   // });
+     var express = require('express');
+     var mongoose = require('mongoose');
+     var yelp = require("node-yelp");   
+     var Reg = require("./models/register");
+     var User = require("./models/user");
+     var Name = require("./models/name");
 
      app.get('/', function(req, res) {
         res.render('index3.ejs'); // load the index.ejs file
@@ -31,7 +16,8 @@ module.exports = function(app, passport) {
      });
 
     app.post('/', function(req, res, next) { 
-    var r = {re:req.body.location};
+
+    
     var client = yelp.createClient({
     oauth: {
      "consumer_key": "07BSeMz5vajMDoPc1i02ng",
@@ -42,8 +28,8 @@ module.exports = function(app, passport) {
   
  
    httpClient: {
-     maxSockets: 10 // ~> Default is 10 
-  }
+     maxSockets: 10 
+   }
  }); 
 
 client.search({
@@ -59,38 +45,46 @@ client.search({
   }); 
 
    app.get('/signup', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
+        res.render('index.ejs'); 
     });
     
     app.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile.ejs', {
-            user : req.user // get the user out of session and pass to template
+            user : req.user 
         });
     });
 
     app.post("/submit",isLoggedIn, function(req, res, next) {
         
-        var name = req.body.name;
-           
-        Name.create(name,function(err,names) {
-         
-        res.redirect('/profile/${name}');
+        var name = req.body.name;              
+        var n = new Name({name:name}); 
+     
+        n.save(function(err,names) {
+
+         console.log(names);
+
+         res.redirect('/profile/${name}/names');
+         //res.send(names);
+
 
       });
+        
     });
 
-    app.get("/profile/:name", function(req, res) {
+    app.get("/profile/:name/names", function(req, res) {
+
          var name = req.params.name;
-                
-       
+         var names = req.params.names;              
+         
+         console.log(names);
+        Name.find({ names:names
+        }, function(err, data) {
+           if (err) { return next(err); }
+          
+           res.render("titles", { data: data});
+         });
+        });
 
-     Name.find({ name: req.params.name
-    }, function(err, data) {
-       if (err) { return next(err); }
-      
-       res.render("titles", { data: data});
-     });
-    });
 
 
     // route for logging out
@@ -120,17 +114,5 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect('/');
 }
-
-
-
-//app.get('/signup', function(req, res, next) {
- //   res.render('signup');
-//});
-
-
-
-
-
-
  
 

@@ -35,14 +35,12 @@
    businesses.forEach(function(user) { %>
    <form action="/submit" method="post">
 <div class="wrap">
-  <div class="s1_3">
-    <div class="in">
+ 
      
-     <img src="<%= user.image_url %>" alt="some_text" style="width:width;height:height;"> <a href="<%= user.url %>"><h4 class ="placename" value = "<%= user.name %>" name ="name"><%= user.name %></h4></a>
+    <a href="<%= user.url %>"> <img src="<%= user.image_url %>" alt="some_text" style="width:width;height:height;"> </a>  <input type="radio" id="rd1" name="name" value="<%= user.name %>" > <%= user.name%></h4>    
      
         <input type="submit" value="I will go" >
-    </div>
-  </div>
+  
 </div>
 </form>
   <% }) %>

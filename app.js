@@ -14,9 +14,10 @@ var session = require("express-session");
 var passport = require('passport');
 var flash    = require('connect-flash');
 var morgan = require('morgan');
+var Name = require("./models/name");
 
 
-mongoose.connect('mongodb://localhost/myapp', function (error){
+mongoose.connect('mongodb://localhost/myapps', function (error){
    
    if (error) console.error(error);
    else console.log("mongo connected")

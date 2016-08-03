@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var nameSchema = mongoose.Schema({
-  name: { type: String }  
+  name: { type: String }
 });
 
 
