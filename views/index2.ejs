@@ -36,8 +36,9 @@
    <form action="/submit" method="post">
 <div class="wrap">
  
-     
-    <a href="<%= user.url %>"> <img src="<%= user.image_url %>" alt="some_text" style="width:width;height:height;"> </a>  <input type="radio" id="rd1" name="name" value="<%= user.name %>" > <%= user.name%></h4>    
+     <div class = "title">Click the photo</div>
+    <div class="layer1"><a href="<%= user.url %>"> <img src="<%= user.image_url %>" alt="some_text" style="width:width;height:height;"> </a></img> </div>
+     <div class="layer2"><input type="radio" id="rd1" name="name" value="<%= user.name %>" > <%= user.name%></div>    
      
         <input type="submit" value="I will go" >
   

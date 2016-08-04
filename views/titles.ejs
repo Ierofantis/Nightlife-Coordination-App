@@ -4,21 +4,21 @@
 <meta charset="utf-8">
 <title>Titles</title>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-<link href="/css/main.css" rel="stylesheet" type="text/css">
+<link href="/css/titles.css" rel="stylesheet" type="text/css">
 </head>
  <% include partials/nav.ejs %>
 <body>
-<h2>Places</h2>
+<center><h2>Places</h2></center>
 
 <% data.forEach(function(user) { %>
-<div id="container">
-   
-    <div id="a"> 
+<div class="wrap">
+  <div class="s1_3">
+    <div class="in"> 
+     
     <%= user.name %>
     </div>
-    
-    <br style="clear: both;">
   </div>
+</div>
   
  
 <% }) %>
