@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link href="/css/index.css" rel="stylesheet" type="text/css">
+</head>
+<% include partials/nav.ejs %>
+    <div class="container">
+        <div class="row">
+            <h1>Search For Nightlife</h1>
+            <form action="/" method="get">
+                <input name="location" type="text" class="form-control" placeholder="location" required>
+                </label>
+                </label>
+                <input type="submit" value="Submit" class="btn btn-primary btn-block">
+            </form>
+            <div id="results">
+                <% 
+     var businesses = data.businesses;
+     var location = data.region;
+
+   businesses.forEach(function(user) { %>
+                    <form action="/submit" method="post">
+                        <div class="wrap">
+                            <div class="title">Click the photo</div>
+                            <div class="layer1">
+                                <input type="hidden" id="rd1" name="name" value="<%= user.name %>">
+                                <a href="<%= user.url %>"> 
+    <img src="<%= user.image_url %>" alt="some_text"> 
+    </a>
+                                </img>
+                            </div>
+                            <div class="layer2">
+                                <%= user.name%>
+                            </div>
+                        </div>
+                        <input type="submit">
+                    </form>
+                    <% }) %>
+            </div>
+            </container>
+            </row>
+            <% include partials/footer.ejs %>
+                </body>
+
+</html>
