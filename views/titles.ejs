@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8">
-<title>Titles</title>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-<link href="/css/titles.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <title>Titles</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link href="/css/titles.css" rel="stylesheet" type="text/css">
 </head>
- <% include partials/nav.ejs %>
-<body>
-<center><h2>Places</h2></center>
+<% include partials/nav.ejs %>
 
-<% data.forEach(function(user) { %>
-<div class="wrap">
-  <div class="s1_3">
-    <div class="in"> 
-     
-    <%= user.name %>
-    </div>
-  </div>
-</div>
-  
- 
-<% }) %>
+    <body>
+        <center>
+            <h2>Places</h2></center>
+        <% data.forEach(function(user) { %>
+            <form method="post" action="/destroy/<%= user.id %>">
+                <div class="wrap">
+                    <div class="s1_3">
+                        <button id="destroy" type="submit" class="btn-danger center-block"> Delete</button>
+                        <div class="in">
+                            <%= user.name %>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <% }) %>
+                <% include partials/footer.ejs %>
+    </body>
 
-<% include partials/footer.ejs %>
-</body>
 </html>

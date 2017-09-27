@@ -15,8 +15,16 @@ module.exports = function(app, passport) {
         res.render('fail.ejs'); // load the index.ejs file
     });
 
-    app.post('/', function(req, res, next) {
+    app.post('/destroy/:id', function(req, res) {
+        var id = req.params.id;
+        Name.findByIdAndRemove(id, req.body, function(err, user) {
+            user.remove(function(err, user) {
+                res.redirect('/profile/names');
+            })
+        })
+    })
 
+    app.post('/', function(req, res, next) {
 
         var client = yelp.createClient({
             oauth: {
@@ -25,8 +33,6 @@ module.exports = function(app, passport) {
                 "token": "8i9BMfEh8XttSzoUw-fb8T4C_tk6BVWH",
                 "token_secret": "DYEUv11n8qjEVy0hysCeyUCjq58"
             },
-
-
             httpClient: {
                 maxSockets: 10
             }
@@ -38,8 +44,6 @@ module.exports = function(app, passport) {
         }).then(function(data) {
             var businesses = data.businesses;
             var location = data.region;
-
-
             res.render("index2", { data: data });
         });
     });
@@ -48,8 +52,7 @@ module.exports = function(app, passport) {
         res.render('index.ejs');
     });
 
-    app.get('/profile', isLoggedIn, function(req, res) {
-        console.log(req.user);
+    app.get('/profile', isLoggedIn, function(req, res) {        
         res.render('profile.ejs', {
             user: req.user
         });
@@ -59,44 +62,33 @@ module.exports = function(app, passport) {
 
         var name = req.body.name;
         var reqName = req.user.google.name;
-
         var n = new Name({ name: name, reqName: reqName });
-
         n.save(function(err, names) {
-
             res.redirect('/profile/names');
         });
     });
 
-
-    app.get("/profile/names", function(req, res) {
-
+    app.get("/profile/name", isLoggedIn, function(req, res) {
+        
         var name = req.params.name;
         var names = req.params.names;
         var reqName = req.params.reqName;
-
 
         Name.find({
             reqName: req.user.google.name,
             names: names
         }, function(err, data) {
             if (err) { return next(err); }
-
-            res.render("titles", { data: data });
+            res.render("titles", { data: data});            
         });
     });
 
-
     app.get("/titles", function(req, res) {
-
         res.render("titles", { data: data });
     });
 
-
-
     // route for logging out
     app.get('/logout', function(req, res) {
-
         req.logout();
         res.redirect('/');
     });
@@ -108,17 +100,14 @@ module.exports = function(app, passport) {
         passport.authenticate('google', {
             successRedirect: '/profile',
             failureRedirect: '/fail'
-
         }));
 };
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
-
     // if they aren't redirect them to the home page
     res.redirect('/');
 }

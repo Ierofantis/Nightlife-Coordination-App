@@ -5,7 +5,6 @@ var nameSchema = mongoose.Schema({
   reqName: {type: String}
 });
 
-
 var Name = mongoose.model("Name", nameSchema);
 
 module.exports = Name;

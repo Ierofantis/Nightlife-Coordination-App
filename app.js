@@ -18,10 +18,8 @@ var Name = require("./models/name");
 
 
 mongoose.connect("mongodb://localhost/Nightlife", function(error) {
-
     if (error) console.error(error);
     else console.log("mongo connected")
-
 });
 
 require('./config/passport')(passport); // pass passport for configuration
