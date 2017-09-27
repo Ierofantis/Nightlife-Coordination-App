@@ -18,4 +18,4 @@ User Story: As an unauthenticated user, when I login I should not have to search
 NodeJs/ExpressJs, Passport Js, Yelp API, MongoDB/Mongoose, EJS/CSS3, Git, Heroku Toolbelt
 
 #Online 
-https://nightcord.herokuapp.com/
+https://nightlifeamerica.herokuapp.com/
