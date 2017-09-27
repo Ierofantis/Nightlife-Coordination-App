@@ -1,19 +1,25 @@
 body {
   background-color: #222;
-  background-image: url(https://dl.dropbox.com/u/21192727/p/checkered_pattern.png);
-  font-family: sans-serif;
+  background-image: url(https://media.timeout.com/images/100519023/image.jpg);
+  background-repeat:repeat-x;
+    background-attachment:fixed;
+    background-position: left top;
+    position:absolute;
+    height:610px;   
 }
+
 .wrap {
  
-    width: 100px;
-    min-height: 125px;
+    width: 200px;
+    min-height: 150px;
     background-color: #ECECEC;
     border: 1px solid #C6C6C6;
     border-radius: 3px;
-    text-align: left;
+    text-align: center;
     float:left;
     margin:5px;
     background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_uLBwePv6EJio7cuZNpMxBbpdxlqkSBiHSx6HRnTKQekFiAtRAg);
+    background-size: 200px;
     background-repeat: no-repeat;
     
 }

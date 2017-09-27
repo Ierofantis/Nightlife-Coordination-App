@@ -3,15 +3,13 @@ body {
 }
 
 h2 {
-   display: table;
+  display: table;
   margin: 40px auto;
   background-color: #b8b8b8;
   font: 20px Helvetica;
   text-transform: uppercase;
   letter-spacing: 3px;
 }
-
-
 
 form {
   display: table;

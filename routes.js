@@ -19,7 +19,7 @@ module.exports = function(app, passport) {
         var id = req.params.id;
         Name.findByIdAndRemove(id, req.body, function(err, user) {
             user.remove(function(err, user) {
-                res.redirect('/profile/names');
+                res.redirect('/profile/name');
             })
         })
     })
@@ -64,7 +64,7 @@ module.exports = function(app, passport) {
         var reqName = req.user.google.name;
         var n = new Name({ name: name, reqName: reqName });
         n.save(function(err, names) {
-            res.redirect('/profile/names');
+            res.redirect('/profile/name');
         });
     });
 
